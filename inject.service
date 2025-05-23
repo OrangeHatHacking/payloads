@@ -1,0 +1,12 @@
+[Unit]
+Description=BadUSB Bash Injector
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/hid-gadget-setup.sh
+ExecStartPost=/usr/bin/inject.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
