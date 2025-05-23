@@ -43,9 +43,9 @@ declare -A MODIFIERS=(
 send_key() {
   # $1 = modifier, $2 = keycode
   printf "\\x$1\\x00\\x00\\x00\\x00\\x00\\x00\\x$2" > $HID_DEV
-  sleep 0.0001
+  sleep 0.00001
   printf "\x00\x00\x00\x00\x00\x00\x00\x00" > $HID_DEV
-  sleep 0.0001
+  sleep 0.00001
 }
 
 send_string() {

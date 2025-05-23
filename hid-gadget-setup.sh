@@ -25,6 +25,10 @@ echo 0xc31c > idProduct     # Logitech USB Keyboard
 echo 0x0110 > bcdDevice     # v1.10
 echo 0x0200 > bcdUSB        # USB 2.0
 
+echo 0xEF > bDeviceClass
+echo 0x02 > bDeviceSubClass
+echo 0x01 > bDeviceProtocol
+
 mkdir -p strings/0x409
 echo "00000000001" > strings/0x409/serialnumber
 echo "Logitech" > strings/0x409/manufacturer            
@@ -72,4 +76,4 @@ echo "" > UDC || true
 echo "$UDC_DEV" > UDC
 echo "Gadget bound to $UDC_DEV"
 
-sleep 1
+sleep 2
