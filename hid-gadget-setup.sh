@@ -71,9 +71,10 @@ if [ -z "$UDC_DEV" ]; then
   exit 1
 fi
 
+sleep 2
+
 # Cleanly bind only after all setup is complete
 echo "" > UDC || true
 echo "$UDC_DEV" > UDC
 echo "Gadget bound to $UDC_DEV"
 
-sleep 2
